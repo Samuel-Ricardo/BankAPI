@@ -25,7 +25,14 @@ describe('[SERVICE] | Bank Account - Tests', () => {
     service = new BankAccountService(repository);
   });
 
-  it('should create a new bank account', () => {
-    expect(true).toBeTruthy();
+  it('should create a new bank account', async () => {
+    await service.create('111-11');
+    const model = await ormRepo.findOneBy({ account_number: '111-11' });
+
+    expect(model).toBeDefined();
+
+    expect(model.id).toBeDefined;
+    expect(model.account_number).toBe('111-11');
+    expect(model.balance).toBe(0);
   });
 });

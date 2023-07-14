@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'typeorm/driver/mongodb/bson.typings';
+import { v4 as uuid } from 'uuid';
 
 export class BankAccount {
   constructor(
@@ -15,5 +15,12 @@ export class BankAccount {
 
   credit(amount: number) {
     this.balance += amount;
+  }
+
+  getId() {
+    return this.id;
+  }
+  getBalance() {
+    return this.balance;
   }
 }

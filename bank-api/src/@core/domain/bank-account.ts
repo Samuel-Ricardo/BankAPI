@@ -8,4 +8,12 @@ export class BankAccount {
   ) {
     this.id = id ?? uuid();
   }
+
+  debit(amount: number) {
+    this.balance -= amount;
+  }
+
+  credit(amount: number) {
+    this.balance += amount;
+  }
 }

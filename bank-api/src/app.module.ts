@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BankAccountSchema } from './@core/infra/db/bank-account.schema';
+import { BankAccountsModule } from './bank-accounts/bank-accounts.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { BankAccountSchema } from './@core/infra/db/bank-account.schema';
       logging: true,
       entities: [BankAccountSchema],
     }),
+    BankAccountsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

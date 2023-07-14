@@ -3,6 +3,8 @@ import { InjectRepository, getDataSourceToken } from '@nestjs/typeorm';
 import { CreateBankAccountDto } from './dto/create-bank-account.dto';
 import { Repository, DataSource } from 'typeorm';
 import { BankAccountSchema } from '../@core/infra/db/bank-account.schema';
+import { TransferBankAccountDto } from './dto/transfer-bank-account.dto';
+import { throws } from 'assert';
 
 @Injectable()
 export class BankAccountsService {
@@ -27,15 +29,33 @@ export class BankAccountsService {
     return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} bankAccount`;
+  findOne(id: string) {
+    return this.repository.findOneBy({ id });
   }
 
-  update(id: number) {
-    return `This action updates a #${id} bankAccount`;
-  }
+  async transfer({ from, to, amount }: TransferBankAccountDto) {
+    const queryRunner = this.dataSource.createQueryRunner();
 
-  remove(id: number) {
-    return `This action removes a #${id} bankAccount`;
+    try {
+      await queryRunner.startTransaction();
+
+      const fromAccount = await this.repository.findOneBy({
+        account_number: from,
+      });
+      const toAccount = await this.repository.findOneBy({
+        account_number: to,
+      });
+
+      fromAccount.balance -= amount;
+      toAccount.balance += amount;
+
+      this.repository.save(fromAccount);
+      this.repository.save(toAccount);
+
+      await queryRunner.commitTransaction();
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
   }
 }

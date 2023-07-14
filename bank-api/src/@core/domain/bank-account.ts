@@ -23,4 +23,7 @@ export class BankAccount {
   getBalance() {
     return this.balance;
   }
+  getAccountNumber() {
+    return this.account_number;
+  }
 }

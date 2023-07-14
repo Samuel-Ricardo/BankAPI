@@ -7,6 +7,5 @@ export class BankAccount {
     private id?: string,
   ) {
     this.id = id ?? uuid();
-    ('');
   }
 }

@@ -24,7 +24,7 @@ export class BankAccountsService {
   }
 
   findAll() {
-    return `This action returns all bankAccounts`;
+    return this.repository.find();
   }
 
   findOne(id: number) {

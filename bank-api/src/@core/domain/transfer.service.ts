@@ -1,6 +1,6 @@
 import { BankAccount } from './bank-account';
 
-export class TransferSerfice {
+export class TransferService {
   async transfer(
     bankAccountSrc: BankAccount,
     bankAccountDest: BankAccount,

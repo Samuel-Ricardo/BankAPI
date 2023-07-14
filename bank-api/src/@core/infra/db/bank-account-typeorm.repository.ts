@@ -15,7 +15,11 @@ export class BankAccountTypeOrmRepository implements BankAccountRepository {
       balance: bankAccount.getBalance(),
     });
   }
-  findByAccountNumber(accountNumber: string): Promise<BankAccount> {
-    throw new Error('Method not implemented.');
+
+  async findByAccountNumber(accountNumber: string): Promise<BankAccount> {
+    const model = await this.ormRepo.findOneBy({
+      account_number: accountNumber,
+    });
+    return new BankAccount(model.balance, model.account_number, model.id);
   }
 }
